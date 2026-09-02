@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="DirectXTex/DirectXTex_Desktop_2026.vcxproj" Id="371b9fa9-4c90-4ac6-a123-aced756d6c77" />
+  <Project Path="ShooterGame.vcxproj" Id="c7b517cf-2f9d-49cc-8f78-866358b9ecde">
+    <BuildDependency Project="DirectXTex/DirectXTex_Desktop_2026.vcxproj" />
+  </Project>
+</Solution>
