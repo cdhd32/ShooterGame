@@ -362,8 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-DirectX-Headers
-DirectXTex
-Model
-motion
-toon
+DirectX-Headers/
+DirectXTex/
+Model/
+motion/
+toon/
