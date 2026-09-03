@@ -9,8 +9,8 @@
 
 ## 완료 기준 (MVP)
 
-- [ ] 게임이 개발 환경 없이 실행된다.
-- [ ] WASD 이동과 마우스 시점 조작이 된다.
+- [X] 게임이 개발 환경 없이 실행된다.
+- [X] WASD 이동과 마우스 시점 조작이 된다.
 - [ ] 플레이어가 벽을 통과하지 않는다.
 - [ ] 적 여러 명이 플레이어를 추격한다.
 - [ ] 조준점 사격으로 적을 처치할 수 있다.
@@ -35,14 +35,14 @@
 
 ## 1. FPS 카메라와 입력
 
-- [ ] `FpsCamera` 구조체 추가: 위치, yaw, pitch, view 행렬
-- [ ] `WASD` 이동 구현
-- [ ] `Shift` 달리기 구현 (선택)
-- [ ] 마우스 델타로 yaw/pitch 회전 구현
-- [ ] pitch를 위/아래 약 83도 범위로 제한
-- [ ] `XMMatrixLookToLH`로 `Dx12Wrapper::SetScene()`의 고정 카메라 교체
-- [ ] 창 포커스 해제 시 마우스 입력을 무시
-- [ ] 처음에는 `WM_MOUSEMOVE`, 이후 필요하면 Raw Input (`WM_INPUT`)으로 교체
+- [X] `FpsCamera` 구조체 추가: 위치, yaw, pitch, view 행렬
+- [X] `WASD` 이동 구현
+- [X] `Shift` 달리기 구현 (선택)
+- [X] 마우스 델타로 yaw/pitch 회전 구현
+- [X] pitch를 위/아래 약 83도 범위로 제한
+- [X] `XMMatrixLookToLH`로 `Dx12Wrapper::SetScene()`의 고정 카메라 교체
+- [X] 창 포커스 해제 시 마우스 입력을 무시
+- [X] 처음에는 `WM_MOUSEMOVE`, 이후 필요하면 Raw Input (`WM_INPUT`)으로 교체
 
 ## 2. 플레이 공간
 

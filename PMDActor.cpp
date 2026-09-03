@@ -318,31 +318,6 @@ HRESULT PMDActor::CreateTransformView()
 		_mappedMatrices + 1
 	);
 
-	/*const char str_arm[5] = {-115, -74, -104, 114, 0};
-	const char str_elbow[7] = { -115, -74, -126, -48, -126, -74, 0};
-	const char str_center[9] = { -125, 90, -125, -109, -125, 94, -127, 91, 0 };
-
-	auto armNode = _boneNodeTable[str_arm];
-	auto& armPos = armNode.startPos;
-
-	auto& armMat = XMMatrixTranslation(-armPos.x, -armPos.y, -armPos.z)
-		* XMMatrixRotationZ(XM_PIDIV2)
-		* XMMatrixTranslation(armPos.x, armPos.y, armPos.z);
-
-	auto elbowNode = _boneNodeTable[str_elbow];
-	auto& elbowPos = elbowNode.startPos;
-
-	auto& elbowMat = XMMatrixTranslation(-elbowPos.x, -elbowPos.y, -elbowPos.z)
-		* XMMatrixRotationZ(-XM_PIDIV2)
-		* XMMatrixTranslation(elbowPos.x, elbowPos.y, elbowPos.z);
-
-	_boneMatrices[armNode.boneIdx] = armMat;
-	_boneMatrices[elbowNode.boneIdx] = elbowMat;
-
-	RecursiveMatrixMultiply(&_boneNodeTable[str_center], XMMatrixIdentity());
-
-	copy(_boneMatrices.begin(), _boneMatrices.end(), _mappedMatrices + 1);*/
-
 	D3D12_DESCRIPTOR_HEAP_DESC transformDescHeapDesc = {};
 	transformDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	transformDescHeapDesc.NodeMask = 0;

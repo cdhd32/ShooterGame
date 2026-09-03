@@ -26,8 +26,8 @@ private:
 	D3D12_VERTEX_BUFFER_VIEW _vbView = {};
 	D3D12_INDEX_BUFFER_VIEW _ibView = {};
 
-	ComPtr<ID3D12Resource> _transformMat = nullptr;//좌표변환행렬(현재는월드만)
-	ComPtr<ID3D12DescriptorHeap> _transformHeap = nullptr;//좌표변환힙
+	ComPtr<ID3D12Resource> _transformMat = nullptr;
+	ComPtr<ID3D12DescriptorHeap> _transformHeap = nullptr;
 
 	struct MaterialForHlsl
 	{
@@ -95,7 +95,7 @@ private:
 	};
 	std::unordered_map<std::string, std::vector<KeyFrame>> _motiondata;
 
-	float _angle;//용Y축 회전
+	float _angle;
 
 private:
 	HRESULT CreateMaterialData();
@@ -113,7 +113,7 @@ public:
 	PMDActor(const wchar_t* filePath, PMDRenderer& renderer);
 	PMDActor(const char* filePath, PMDRenderer& renderer);
 	~PMDActor();
-	///복제본은 정점및 머티리얼은 공용의버퍼을 참조한다에 한다
+
 	PMDActor* Clone();
 	void Update();
 	void Draw();

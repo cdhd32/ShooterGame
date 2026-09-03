@@ -434,13 +434,14 @@ HRESULT Dx12Wrapper::CreateSceneView()
 	XMFLOAT3 eye(0, 10, -10);
 	XMFLOAT3 target(0, 15, 0);
 	XMFLOAT3 up(0, 1, 0);
+
 	_mapSceneData->view = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+	_mapSceneData->eye = eye;
 	_mapSceneData->proj = XMMatrixPerspectiveFovLH(XM_PIDIV4,
 		static_cast<float>(_winSize.cx) / static_cast<float>(_winSize.cy),
 		1.0f,
 		100.0f
 	);
-	_mapSceneData->eye = eye;
 
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -597,7 +598,13 @@ ComPtr<ID3D12Resource> Dx12Wrapper::GetTextureByPath(const wchar_t* texPath)
 	}
 }
 
-void Dx12Wrapper::SetScene()
+void Dx12Wrapper::SetScene(const XMMATRIX& view, const XMFLOAT3& eye)
+{
+	_mapSceneData->view = view;
+	_mapSceneData->eye = eye;
+}
+
+void Dx12Wrapper::BindScene()
 {
 	_cmdList->SetGraphicsRootConstantBufferView(0, _sceneConstBuff->GetGPUVirtualAddress());
 }

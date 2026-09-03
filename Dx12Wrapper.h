@@ -10,33 +10,11 @@
 #include<DirectXTex.h>
 #include<d3dx12.h>
 #include<wrl.h>
+#include <algorithm>
 
 using namespace std;
 using namespace DirectX;
 using namespace Microsoft::WRL;
-
-//struct MaterialForHlsl
-//{
-//	XMFLOAT3 diffuse;
-//	float alpha;
-//	XMFLOAT3 specular;
-//	float specularity;
-//	XMFLOAT3 ambient;
-//};
-//
-//struct AdditionalMaterial
-//{
-//	std::string texPath;
-//	int toonIdx;
-//	bool edgeFlg;
-//};
-//
-//struct Material
-//{
-//	unsigned int indicesNum;
-//	MaterialForHlsl material;
-//	AdditionalMaterial additional;
-//};
 
 class Dx12Wrapper
 {
@@ -99,6 +77,8 @@ private:
 	ID3D12Resource* CreateTextureFromFile(const wchar_t* texpath);
 
 
+
+
 public:
 	Dx12Wrapper(HWND hwnd);
 	~Dx12Wrapper();
@@ -114,6 +94,15 @@ public:
 	ComPtr<ID3D12GraphicsCommandList> CommandList();
 	ComPtr<IDXGISwapChain4> Swapchain();
 
-	void SetScene();
+	void SetScene(const XMMATRIX& view, const XMFLOAT3& eye);
+	void BindScene();
 };
+
+
+namespace util {
+template<typename T>
+constexpr const T& clamp(const T& v, const T& lo, const T& hi) noexcept {
+    return (v < lo) ? lo : (hi < v) ? hi : v;
+}
+}
 
