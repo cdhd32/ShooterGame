@@ -49,6 +49,12 @@ private:
 	int _health = 100;
 	int _score = 0;
 	std::uint32_t _randomState = 0x144BA11u;
+	HWND _statusHud = nullptr;
+	HWND _resultHud = nullptr;
+	HWND _crosshairHud = nullptr;
+	HFONT _statusHudFont = nullptr;
+	HFONT _resultHudFont = nullptr;
+	HFONT _crosshairHudFont = nullptr;
 
 	unsigned long _lastTime = ::timeGetTime();
 
@@ -136,6 +142,9 @@ private:
 	void Shoot();
 	void UpdateGame(float deltaTime);
 	void UpdateWindowTitle();
+	void CreateHud();
+	void UpdateHud();
+	void DestroyHud();
 public:
 	static Application& Instance();
 
