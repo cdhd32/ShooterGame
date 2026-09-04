@@ -96,6 +96,10 @@ private:
 	std::unordered_map<std::string, std::vector<KeyFrame>> _motiondata;
 
 	float _angle;
+	DirectX::XMFLOAT3 _position = { 0.0f, 0.0f, 0.0f };
+	float _scale = 1.0f;
+	float _yaw = 0.0f;
+	bool _visible = true;
 
 private:
 	HRESULT CreateMaterialData();
@@ -115,6 +119,8 @@ public:
 	~PMDActor();
 
 	PMDActor* Clone();
+	void SetTransform(const DirectX::XMFLOAT3& position, float scale, float yaw);
+	void SetVisible(bool visible);
 	void Update();
 	void Draw();
 };

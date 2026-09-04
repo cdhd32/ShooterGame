@@ -233,7 +233,7 @@ HRESULT PMDRenderer::CreateGraphicsPipelineForPMD()
 	gpipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
 	gpipeline.RasterizerState.MultisampleEnable = false;
-	gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
+	gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 	gpipeline.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
 	gpipeline.RasterizerState.DepthClipEnable = true;
 

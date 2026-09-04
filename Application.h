@@ -11,13 +11,15 @@
 #include<d3dx12.h>
 #include<wrl.h>
 #include <algorithm>
+#include <cstdint>
+#include <memory>
 
 #pragma comment(lib, "Winmm.lib")
 
 class Dx12Wrapper;
 class PMDRenderer;
 class PMDActor;
-class LineRenderer;
+class Plane;
 
 class Application
 {
@@ -26,24 +28,42 @@ private:
 	HWND _hwnd;
 	std::shared_ptr<Dx12Wrapper> _dx12;
 	std::shared_ptr<PMDRenderer> _pmdRenderer;
-	std::shared_ptr<PMDActor> _pmdActor;
-	std::shared_ptr<LineRenderer> _lineRenderer;
+	std::vector<std::unique_ptr<Plane>> _arenaPlanes;
+
+	struct Enemy
+	{
+		std::shared_ptr<PMDActor> actor;
+		DirectX::XMFLOAT3 position = {};
+		float speed = 1.8f;
+		int health = 1;
+		bool active = false;
+	};
+	std::vector<Enemy> _enemies;
+
+	enum class GameState { Playing, Won, Lost };
+	GameState _gameState = GameState::Playing;
+	float _timeRemaining = 90.0f;
+	float _spawnCooldown = 0.0f;
+	float _shotCooldown = 0.0f;
+	float _damageCooldown = 0.0f;
+	int _health = 100;
+	int _score = 0;
+	std::uint32_t _randomState = 0x144BA11u;
 
 	unsigned long _lastTime = ::timeGetTime();
 
 	struct FpsCamera
 	{
-		DirectX::XMFLOAT3 position = { 0.0f, 15.0f, -8.0f };
+		DirectX::XMFLOAT3 position = { 0.0f, 1.7f, -8.0f };
 		float yaw = 0.0f;
 		float pitch = 0.0f;
-
-		float dt = 0.0f;
 
 		void Move(float dt)
 		{
 			using namespace DirectX;
 
-			const float speed = 5.0f;
+			const float speed =
+				(GetAsyncKeyState(VK_SHIFT) & 0x8000) ? 8.0f : 5.0f;
 			XMVECTOR forward = XMVectorSet(std::sinf(yaw), 0.0f, std::cosf(yaw), 0.0f);
 			XMVECTOR right = XMVectorSet(std::cosf(yaw), 0.0f, -std::sinf(yaw), 0.0f);
 			XMVECTOR pos = XMLoadFloat3(&position);
@@ -58,6 +78,9 @@ private:
 				pos = XMVectorAdd(pos, XMVectorScale(right, -speed * dt));
 
 			XMStoreFloat3(&position, pos);
+			position.x = std::clamp(position.x, -18.5f, 18.5f);
+			position.y = 1.7f;
+			position.z = std::clamp(position.z, -18.5f, 18.5f);
 		}
 
 		void AddMouseDelta(float dx, float dy)
@@ -85,6 +108,18 @@ private:
 				forward,
 				DirectX::XMVectorSet(0, 1, 0, 0));
 		}
+
+		DirectX::XMFLOAT3 Forward() const
+		{
+			DirectX::XMFLOAT3 result;
+			DirectX::XMStoreFloat3(&result, DirectX::XMVector3Normalize(
+				DirectX::XMVectorSet(
+					std::cosf(pitch) * std::sinf(yaw),
+					std::sinf(pitch),
+					std::cosf(pitch) * std::cosf(yaw),
+					0.0f)));
+			return result;
+		}
 	};
 
 	FpsCamera _camera;
@@ -95,6 +130,12 @@ private:
 	void operator=(const Application&) = delete;
 
 	void CreateGameWindow(HWND& hwnd, WNDCLASSEX& windowClass);
+	void CreateArena();
+	void ResetGame();
+	void SpawnEnemy();
+	void Shoot();
+	void UpdateGame(float deltaTime);
+	void UpdateWindowTitle();
 public:
 	static Application& Instance();
 

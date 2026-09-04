@@ -105,12 +105,31 @@ PMDActor* PMDActor::Clone()
 
 void PMDActor::Update()
 {
-	_angle += 0.01f;
-	_mappedMatrices[0] = XMMatrixRotationY(_angle);
+	_mappedMatrices[0] =
+		XMMatrixScaling(_scale, _scale, _scale) *
+		XMMatrixRotationY(_yaw) *
+		XMMatrixTranslation(_position.x, _position.y, _position.z);
+}
+
+void PMDActor::SetTransform(const DirectX::XMFLOAT3& position, float scale, float yaw)
+{
+	_position = position;
+	_scale = scale;
+	_yaw = yaw;
+}
+
+void PMDActor::SetVisible(bool visible)
+{
+	_visible = visible;
 }
 
 void PMDActor::Draw()
 {
+	if (!_visible)
+	{
+		return;
+	}
+
 	ID3D12GraphicsCommandList* cmdList = _dx12.CommandList().Get();
 
 	cmdList->IASetVertexBuffers(0, 1, &_vbView);
@@ -284,6 +303,7 @@ HRESULT PMDActor::CreateMaterialAndTextureView()
 		matDescHeapHandle.ptr += incSize;
 	}
 
+	return S_OK;
 }
 
 HRESULT PMDActor::CreateTransformView()
@@ -616,6 +636,8 @@ HRESULT PMDActor::LoadPMDFile(const wchar_t* path)
 			_spaResources[i] = _dx12.GetTextureByPath(spaFilePath.c_str());
 		}
 	}
+
+	return S_OK;
 }
 
 
