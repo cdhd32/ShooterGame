@@ -42,5 +42,9 @@ public:
 	void Draw();
 	ID3D12PipelineState* GetPipelineState();
 	ID3D12RootSignature* GetRootSignature();
+
+	ID3D12Resource* GetWhiteTexture();
+	ID3D12Resource* GetBlackTexture();
+	ID3D12Resource* GetGradationTexture();
 };
 

@@ -52,6 +52,21 @@ ID3D12RootSignature* PMDRenderer::GetRootSignature()
 	return _rootSignature.Get();
 }
 
+ID3D12Resource* PMDRenderer::GetWhiteTexture()
+{
+	return _whiteTex.Get();
+}
+
+ID3D12Resource* PMDRenderer::GetBlackTexture()
+{
+	return _blackTex.Get();
+}
+
+ID3D12Resource* PMDRenderer::GetGradationTexture()
+{
+	return _gradTex.Get();
+}
+
 ID3D12Resource* PMDRenderer::CreateDefaultTexture(size_t width, size_t height)
 {
 	D3D12_HEAP_PROPERTIES texHeapProp = {};
